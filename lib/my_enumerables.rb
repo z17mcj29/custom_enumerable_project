@@ -95,6 +95,31 @@ module Enumerable
     end
     ret_value
   end
+
+  def my_inject(n = nil)
+    #Doing some research on how this works.
+    #if I provide an initial value that is where the accumulator will begin
+    #if no initial value is provided the first element of the collection is used as the starting value
+    #It will take two arguments, the accumulator and element, accumulator going first.
+    #the accumulator is commonly called the "memo"
+    #I'm not sure about hashes and the different outputs I'm expected to be able to
+    #produce. I know in the normal inject I can have the output be a hash. I'm not sure
+    #which data type to make my accumulator.
+    #My research also didn't tell me if it passes the enumerator if no block is passed, but I will
+    #start off assuming that is how it works.
+    return to_eunm(:my_inject) unless block_given?
+
+    ret_value = 0
+    if n == nil
+      ret_value = self[0]
+    else
+      ret_value = n
+    end
+    self.my_each do |v|
+      ret_value += yield(ret_value, v)
+    end
+    ret_value
+  end
 end
 
 # You will first have to define my_each
