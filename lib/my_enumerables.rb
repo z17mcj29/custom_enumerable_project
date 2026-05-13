@@ -68,21 +68,22 @@ module Enumerable
       self.my_each do |v|
         ret_value += 1 if yield(v)
       end
-    elif n == nil
-      self.my_each do |v|
-        ret_value += 1
-      end
-    else
-      self.my_each do |v|
-        ret_value += 1 if v == n
-      end
     end
-    ret_value
-        
+
+    if block_given? == false
+      if n == nil
+        self.my_each do |v|
+          ret_value += 1
+        end
+      else
+        self.my_each do |v|
+          ret_value += 1 if v == n
+        end
+      end
+              
+    end
+      ret_value
   end
-
-
-
 end
 
 # You will first have to define my_each
