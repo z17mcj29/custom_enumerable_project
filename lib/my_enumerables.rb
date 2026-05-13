@@ -128,11 +128,11 @@ module Enumerable
     #it's cheating in a sense. I want to do this on my own if I can.
     return to_enum(:my_inject) unless block_given? #I just noticed my previous attempt misspelled enum
     memo = n
-    ret_value = n
+    
     self.my_each do |v|
-      ret_value += yield(memo,v)
+      memo = yield(memo,v)
     end
-      ret_value
+      memo
     #obviously my logic isn't working. I'm not sure what the problem is, but it's obvious I'm missing
     #something. The process is working, just not correctly. My testing says 1st test should be 88, but
     #I get 880. 2nd test expects 2227680, gets 27941760. 3rd test expects 188, gets 52080.
@@ -142,6 +142,14 @@ module Enumerable
     #OK, I am going to try and add a value ret_value which has the same initial
     #value as memo, but is a seperate value. I feel like having memo twice might
     #be messing with the math.
+    #This is like a running tally of how this is going. Adding ret_value made the first
+    #test pass, but not the next two. There has to be something wrong with the += portion.
+    #I wonder if I could make ret_value an array [], << all of the values into it, and then
+    #add it at the end.
+    #Just another comment here as I work to figure this out. I need to make memo the new
+    #value each time I do an interation. This is a tricky problem. I actually don't think I need a ret_value,
+    #but I need to figure out how to increment memo each time, which I thought I already did...
+    #maybe its just memo = yield(memo,v)
   end
 end
 
